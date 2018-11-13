@@ -1,6 +1,0 @@
-framework module Pods_IGListKit_research {
-  umbrella header "Pods-IGListKit_research-umbrella.h"
-
-  export *
-  module * { export * }
-}
