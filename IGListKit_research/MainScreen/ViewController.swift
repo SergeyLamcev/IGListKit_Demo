@@ -14,7 +14,15 @@ class ViewController: UIViewController, ListAdapterDataSource, ListAdapterMoveDe
     lazy var adapter: ListAdapter = {
         return ListAdapter(updater: ListAdapterUpdater(), viewController: self)
     }()
-    let collectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
+    
+    let collectionView: UICollectionView = {
+        let layout = UICollectionViewFlowLayout()
+        layout.estimatedItemSize = CGSize(width: 44.0, height: 44.0)
+        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
+        collectionView.alwaysBounceVertical = true
+        collectionView.backgroundColor = UIColor(red: 0.831_372_549, green: 0.945_098_039, blue: 0.964_705_882, alpha: 1)
+        return collectionView
+    }()
     
     // NOTE: id should be unique or will throw exeption
     var data: [Any] = generateCollectionViewData()
@@ -25,15 +33,24 @@ class ViewController: UIViewController, ListAdapterDataSource, ListAdapterMoveDe
         var result: [Any] = []
         for index in itemsIndexes {
             result.append(ImagePost(id: index, text: "text \(index)", imageURL: "https://picsum.photos/300/300/?image=\(index)"))
-            result.append(User(pk: index+itemsIndexes.last!, name: "Ryan \(index)" , handle: "ryanolsonk \(index)"))
+//            result.append(User(pk: index+itemsIndexes.last!, name: "Ryan \(index)" , handle: "ryanolsonk \(index)"))
         }
         return result
     }
+
     
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
+        if let collectionViewFlowLayout = collectionView.collectionViewLayout as? UICollectionViewFlowLayout {
+            collectionViewFlowLayout.estimatedItemSize = UICollectionViewFlowLayout.automaticSize
+        }
         setupLayout()
+    }
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        collectionView.frame = view.bounds
     }
     
     func setupLayout() {
@@ -62,7 +79,9 @@ class ViewController: UIViewController, ListAdapterDataSource, ListAdapterMoveDe
         guard let lastItem = data.last! as? User else {
             return
         }
-        data.append(User(pk: lastItem.pk + 1, name: "Ryan \(lastItem.pk + 1)" , handle: "ryanolsonk \(lastItem.pk + 1)"))
+        debugPrint("Tap")
+        data.append(User(pk: lastItem.pk + 1, name: "Petuh \(lastItem.pk + 1)" , handle: "Petuh \(lastItem.pk + 1)"))
+        adapter.reloadData(completion: nil)
     }
     
     // MARK: IGListKit - ListAdapterDataSource, ListAdapterMoveDelegate

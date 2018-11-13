@@ -21,7 +21,7 @@ class ImageCell: UICollectionViewCell {
     }
     
     override init(frame: CGRect) {
-        super.init(frame: CGRect.zero)
+        super.init(frame: frame)
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -31,17 +31,30 @@ class ImageCell: UICollectionViewCell {
     private func setupLayout() {
         backgroundColor = .clear
         contentView.addSubview(postText)
-        postText.backgroundColor = .blue
+        postText.font = UIFont.systemFont(ofSize: CGFloat.random(in: 40..<50))
         postText.snp.makeConstraints { (make) in
-            make.top.left.bottom.equalToSuperview()
-            make.right.equalToSuperview().offset(contentView.frame.width / 2)
+            make.top.left.bottom.right.equalToSuperview()
+//            make.right.equalTo(postText.snp.right)
         }
-        contentView.addSubview(postImage)
-        postImage.snp.makeConstraints { (make) in
-            make.top.right.bottom.equalToSuperview()
-            make.left.equalToSuperview().offset(contentView.frame.width / 2)
-        }
+//        contentView.addSubview(postImage)
+//        postImage.clipsToBounds = true
+//        postImage.snp.makeConstraints { (make) in
+//            make.top.right.bottom.equalToSuperview()
+//            make.left.equalTo(postText.snp.right)
+//        }
     }
+    
+    override func preferredLayoutAttributesFitting(_ layoutAttributes: UICollectionViewLayoutAttributes) -> UICollectionViewLayoutAttributes {
+        setNeedsLayout()
+        layoutIfNeeded()
+        let size = contentView.systemLayoutSizeFitting(layoutAttributes.size)
+        var newFrame = layoutAttributes.frame
+        // note: don't change the width
+        newFrame.size.height = ceil(size.height)
+        layoutAttributes.frame = newFrame
+        return layoutAttributes
+    }
+    
 }
 
 extension ImageCell: ListBindable {

@@ -9,6 +9,7 @@
 import IGListKit
 
 class UserSectionController: ListSectionController {
+
     private var user: User?
     private let isReorderable: Bool
     
@@ -18,15 +19,15 @@ class UserSectionController: ListSectionController {
     }
     
     override func sizeForItem(at index: Int) -> CGSize {
-        return CGSize(width: collectionContext!.containerSize.width, height: 55)
+        return CGSize(width: collectionContext!.containerSize.width, height: 100)
     }
     
     override func cellForItem(at index: Int) -> UICollectionViewCell {
-        guard let cell = collectionContext?.dequeueReusableCell(of: UserCell.self, for: self, at: index) as? UserCell else {
+        guard let cell = collectionContext?.dequeueReusableCell(of: ImageCell.self, for: self, at: index) as? UserCell else {
             fatalError()
         }
-        cell.title = user?.name
-        cell.detail = "@" + (user?.handle ?? "")
+        cell.title = user?.handle
+        cell.detail = user?.name
         return cell
     }
     

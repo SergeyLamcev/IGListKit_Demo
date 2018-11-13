@@ -19,7 +19,7 @@ class ImageSectionController: ListSectionController {
     }
     
     override func sizeForItem(at index: Int) -> CGSize {
-        return CGSize(width: collectionContext!.containerSize.width, height: 55)
+        return CGSize(width: collectionContext!.containerSize.width, height: 100)
     }
     
     override func cellForItem(at index: Int) -> UICollectionViewCell {
