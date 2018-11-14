@@ -25,12 +25,15 @@ class ViewController: UIViewController, ListAdapterDataSource, ListAdapterMoveDe
     }()
     
     // NOTE: id should be unique or will throw exeption
-    var data: [Any] = generateCollectionViewData()
-    var lastItemId: Int = 0
+    var dataOld: [ImagePost] = generateCollectionViewData()
     
-    static func generateCollectionViewData() -> [Any] {
+    lazy var data: [ImagePost] = {
+        return self.dataOld
+    }()
+    
+    static func generateCollectionViewData() -> [ImagePost] {
         let itemsIndexes = Array(1...70)
-        var result: [Any] = []
+        var result: [ImagePost] = []
         for index in itemsIndexes {
             result.append(ImagePost(id: index, text: "text \(index)", imageURL: "https://picsum.photos/300/300/?image=\(index)"))
         }
@@ -76,29 +79,22 @@ class ViewController: UIViewController, ListAdapterDataSource, ListAdapterMoveDe
     }
     
     @objc func addTapped() {
-        guard let lastItem = data.last! as? ImagePost else {
-            return
-        }
+        var newData = data
+        newData.append(ImagePost.init(id: dataOld.count, text: "New post \(dataOld.count+1)", imageURL: "https://picsum.photos/300/300/?image=\(dataOld.count+1)"))
+        data = newData
         
-        debugPrint("Before")
-        debugPrint(collectionView.numberOfSections-1)
-        debugPrint(collectionView.numberOfItems(inSection: collectionView.numberOfSections-1))
+        debugPrint(collectionView.numberOfSections)
+        let result = ListDiffPaths(fromSection: 0, toSection: collectionView.numberOfSections-1, oldArray: dataOld, newArray: newData, option: .equality).forBatchUpdates()
         
-        // Perform the updates to the collection view
-        data.append(ImagePost(id: lastItem.id+1, text: "New item text + \(lastItem.id+1)", imageURL: "https://picsum.photos/300/300/?image=\(lastItem.id+1)"))
-        
-        
-//        let section = collectionView.numberOfSections - 1
-//        let row = collectionView.numberOfItems(inSection: collectionView.numberOfSections-1)
-//        let indexPath = IndexPath.init(row: 0, section: 0)
-//        adapter.updater.insertItems(into: collectionView, indexPaths: [indexPath])
-        
-        adapter.performUpdates(animated: true, completion: { _ in
-            debugPrint("After")
-            debugPrint(self.collectionView.numberOfSections-1)
-            debugPrint(self.collectionView.numberOfItems(inSection: self.collectionView.numberOfSections-1))
-        })
-    
+        collectionView.performBatchUpdates({
+            collectionView.deleteItems(at:  result.deletes)
+            collectionView.insertItems(at:  result.inserts)
+            collectionView.reloadItems(at:  result.updates)
+            result.moves.forEach { move in
+                collectionView.moveItem(at: move.from, to: move.to)
+            }
+        }, completion: nil)
+        dataOld = newData
     }
     
     // MARK: IGListKit - ListAdapterDataSource, ListAdapterMoveDelegate
@@ -132,7 +128,7 @@ class ViewController: UIViewController, ListAdapterDataSource, ListAdapterMoveDe
     }
     
     func listAdapter(_ listAdapter: ListAdapter, move object: Any, from previousObjects: [Any], to objects: [Any]) {
-        data = objects
+        data = objects as! [ImagePost]
     }
     
     // MARK: ListSingleSectionControllerDelegate
