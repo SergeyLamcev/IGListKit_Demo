@@ -9,14 +9,15 @@
 import IGListKit
 import Kingfisher
 
-class ImageSectionController: ListSectionController {
-    private var imagePost: ImagePost?
-    private let isReorderable: Bool
+protocol ImageSectionControllerDelegate: class {
+    func addNewItem(context: ListCollectionContext?)
+}
+
+class ImageSectionController: ListSingleSectionController {
     
-    required init(isReorderable: Bool = false) {
-        self.isReorderable = isReorderable
-        super.init()
-    }
+    weak var delegate: ImageSectionControllerDelegate?
+    
+    private var imagePost: ImagePost?
     
     override func sizeForItem(at index: Int) -> CGSize {
         return CGSize(width: collectionContext!.containerSize.width, height: 100)
@@ -35,7 +36,7 @@ class ImageSectionController: ListSectionController {
         self.imagePost = object as? ImagePost
     }
     
-    override func canMoveItem(at index: Int) -> Bool {
-        return isReorderable
+    func addNewItem() {
+        delegate?.addNewItem(context: collectionContext)
     }
 }

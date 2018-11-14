@@ -15,13 +15,9 @@ class ImageCell: UICollectionViewCell {
     let postText = UILabel()
     let postImage = UIImageView()
     
-    override func layoutSubviews() {
-        super.layoutSubviews()
-        setupLayout()
-    }
-    
     override init(frame: CGRect) {
         super.init(frame: frame)
+        setupLayout()
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -31,17 +27,11 @@ class ImageCell: UICollectionViewCell {
     private func setupLayout() {
         backgroundColor = .clear
         contentView.addSubview(postText)
-        postText.font = UIFont.systemFont(ofSize: CGFloat.random(in: 40..<50))
+//        CGFloat.random(in: 12..<50)
+        postText.font = UIFont.systemFont(ofSize: 40.0)
         postText.snp.makeConstraints { (make) in
             make.top.left.bottom.right.equalToSuperview()
-//            make.right.equalTo(postText.snp.right)
         }
-//        contentView.addSubview(postImage)
-//        postImage.clipsToBounds = true
-//        postImage.snp.makeConstraints { (make) in
-//            make.top.right.bottom.equalToSuperview()
-//            make.left.equalTo(postText.snp.right)
-//        }
     }
     
     override func preferredLayoutAttributesFitting(_ layoutAttributes: UICollectionViewLayoutAttributes) -> UICollectionViewLayoutAttributes {
