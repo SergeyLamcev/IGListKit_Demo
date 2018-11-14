@@ -27,10 +27,6 @@ class ViewController: UIViewController, ListAdapterDataSource, ListAdapterMoveDe
     // NOTE: id should be unique or will throw exeption
     var dataOld: [ImagePost] = generateCollectionViewData()
     
-    lazy var data: [ImagePost] = {
-        return self.dataOld
-    }()
-    
     static func generateCollectionViewData() -> [ImagePost] {
         let itemsIndexes = Array(1...70)
         var result: [ImagePost] = []
@@ -79,29 +75,33 @@ class ViewController: UIViewController, ListAdapterDataSource, ListAdapterMoveDe
     }
     
     @objc func addTapped() {
-        var newData = data
-        newData.append(ImagePost.init(id: dataOld.count, text: "New post \(dataOld.count+1)", imageURL: "https://picsum.photos/300/300/?image=\(dataOld.count+1)"))
-        data = newData
+        
+        dataOld.append(ImagePost.init(id: dataOld.count+1, text: "New post \(dataOld.count+1)", imageURL: "https://picsum.photos/300/300/?image=\(dataOld.count+1)"))
         
         debugPrint(collectionView.numberOfSections)
-        let result = ListDiffPaths(fromSection: 0, toSection: collectionView.numberOfSections-1, oldArray: dataOld, newArray: newData, option: .equality).forBatchUpdates()
+//        let result = ListDiffPaths(fromSection: 0, toSection: collectionView.numberOfSections-1, oldArray: dataOld, newArray: newData, option: .equality).forBatchUpdates()
         
-        collectionView.performBatchUpdates({
-            collectionView.deleteItems(at:  result.deletes)
-            collectionView.insertItems(at:  result.inserts)
-            collectionView.reloadItems(at:  result.updates)
-            result.moves.forEach { move in
-                collectionView.moveItem(at: move.from, to: move.to)
-            }
-            dataOld = newData
-        }, completion: nil)
+        adapter.performUpdates(animated: true, completion: nil)
+
+//        collectionView.performBatchUpdates({
+//            collectionView.deleteItems(at:  result.deletes)
+//            collectionView.insertItems(at:  result.inserts)
+//            collectionView.reloadItems(at:  result.updates)
+//            result.moves.forEach { move in
+//                collectionView.moveItem(at: move.from, to: move.to)
+//            }
+//        }, completion: nil)
         
     }
     
     // MARK: IGListKit - ListAdapterDataSource, ListAdapterMoveDelegate
     
     func objects(for listAdapter: ListAdapter) -> [ListDiffable] {
-        return data.map { $0 as! ListDiffable }
+        return dataOld
+    }
+    
+    func listAdapter(_ listAdapter: ListAdapter, move object: Any, from previousObjects: [Any], to objects: [Any]) {
+        dataOld = objects as! [ImagePost]
     }
     
     func listAdapter(_ listAdapter: ListAdapter, sectionControllerFor object: Any) -> ListSectionController {
@@ -124,10 +124,6 @@ class ViewController: UIViewController, ListAdapterDataSource, ListAdapterMoveDe
     
     func emptyView(for listAdapter: ListAdapter) -> UIView? {
         return nil
-    }
-    
-    func listAdapter(_ listAdapter: ListAdapter, move object: Any, from previousObjects: [Any], to objects: [Any]) {
-        data = objects as! [ImagePost]
     }
     
     // MARK: ListSingleSectionControllerDelegate
