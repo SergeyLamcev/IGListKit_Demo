@@ -40,7 +40,8 @@ class ViewController: UIViewController, ListAdapterDataSource, ListAdapterMoveDe
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
+        
+        UICollectionView.appearance().isPrefetchingEnabled = false
         if let collectionViewFlowLayout = collectionView.collectionViewLayout as? UICollectionViewFlowLayout {
             collectionViewFlowLayout.estimatedItemSize = UICollectionViewFlowLayout.automaticSize
         }
@@ -85,6 +86,13 @@ class ViewController: UIViewController, ListAdapterDataSource, ListAdapterMoveDe
         
         // Perform the updates to the collection view
         data.append(ImagePost(id: lastItem.id+1, text: "New item text + \(lastItem.id+1)", imageURL: "https://picsum.photos/300/300/?image=\(lastItem.id+1)"))
+        
+        
+//        let section = collectionView.numberOfSections - 1
+//        let row = collectionView.numberOfItems(inSection: collectionView.numberOfSections-1)
+//        let indexPath = IndexPath.init(row: 0, section: 0)
+//        adapter.updater.insertItems(into: collectionView, indexPaths: [indexPath])
+        
         adapter.performUpdates(animated: true, completion: { _ in
             debugPrint("After")
             debugPrint(self.collectionView.numberOfSections-1)

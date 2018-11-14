@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		456E75A8A959D1D092FA39EB /* Pods_IGListKit_researchUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 43B25EA5A6F3330966998DC6 /* Pods_IGListKit_researchUITests.framework */; };
+		7C4F5006219C3D9200F43752 /* DiffTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C4F5005219C3D9200F43752 /* DiffTableViewController.swift */; };
 		7C7D28F7219AE27A00772566 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C7D28F6219AE27A00772566 /* AppDelegate.swift */; };
 		7C7D28F9219AE27A00772566 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C7D28F8219AE27A00772566 /* ViewController.swift */; };
 		7C7D290C219AE27B00772566 /* IGListKit_researchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C7D290B219AE27B00772566 /* IGListKit_researchTests.swift */; };
@@ -47,6 +48,7 @@
 		43F1C9048F5792305CE9C91D /* Pods_IGListKit_researchTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_IGListKit_researchTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		4E0CB158979454BA8340DBCA /* Pods-IGListKit_research.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-IGListKit_research.debug.xcconfig"; path = "Pods/Target Support Files/Pods-IGListKit_research/Pods-IGListKit_research.debug.xcconfig"; sourceTree = "<group>"; };
 		6D103DBE0248989F48F3BC9B /* Pods-IGListKit_researchTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-IGListKit_researchTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-IGListKit_researchTests/Pods-IGListKit_researchTests.debug.xcconfig"; sourceTree = "<group>"; };
+		7C4F5005219C3D9200F43752 /* DiffTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiffTableViewController.swift; sourceTree = "<group>"; };
 		7C7D28F3219AE27A00772566 /* IGListKit_research.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = IGListKit_research.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7C7D28F6219AE27A00772566 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		7C7D28F8219AE27A00772566 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -164,6 +166,7 @@
 				7C7D2931219AF4C500772566 /* Cells */,
 				7C7D292C219AF22100772566 /* SectionControllers */,
 				7C7D28F8219AE27A00772566 /* ViewController.swift */,
+				7C4F5005219C3D9200F43752 /* DiffTableViewController.swift */,
 			);
 			path = MainScreen;
 			sourceTree = "<group>";
@@ -443,6 +446,7 @@
 				7C7D2928219AEC9400772566 /* User.swift in Sources */,
 				7C7D292E219AF32900772566 /* ImageSectionController.swift in Sources */,
 				7C7D2935219AF9C700772566 /* ImageCell.swift in Sources */,
+				7C4F5006219C3D9200F43752 /* DiffTableViewController.swift in Sources */,
 				7C7D292A219AECA800772566 /* ImagePost.swift in Sources */,
 				7C7D2933219AF98400772566 /* UserCell.swift in Sources */,
 			);
