@@ -93,8 +93,9 @@ class ViewController: UIViewController, ListAdapterDataSource, ListAdapterMoveDe
             result.moves.forEach { move in
                 collectionView.moveItem(at: move.from, to: move.to)
             }
+            dataOld = newData
         }, completion: nil)
-        dataOld = newData
+        
     }
     
     // MARK: IGListKit - ListAdapterDataSource, ListAdapterMoveDelegate
@@ -105,8 +106,6 @@ class ViewController: UIViewController, ListAdapterDataSource, ListAdapterMoveDe
     
     func listAdapter(_ listAdapter: ListAdapter, sectionControllerFor object: Any) -> ListSectionController {
         switch object {
-        case is User:
-            return UserSectionController()
         default:
             let configureBlock = { (item: Any, cell: UICollectionViewCell) in
                 guard let cell = cell as? ImageCell, let post = item as? ImagePost else { return }
